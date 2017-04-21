@@ -21,17 +21,19 @@ class Listpage extends React.Component{
 	}
 	componentDidMount(){
 		let newState=[];
+		let {nowUser}=this.state;
 		if(this.props.location.search){
 
 					const query=this.props.location.search;
-					let user=query.substring(query.indexOf('=')+1, query.length);
-					newState=common.getLocalDate(user)==null?[]:[...common.getLocalDate(user)];
+					nowUser=query.substring(query.indexOf('=')+1, query.length);
+					newState=common.getLocalDate(nowUser)==null?[]:[...common.getLocalDate(nowUser)];
 					
 			}else{
-				newState=common.getLocalDate(this.state.nowUser)==null?[]:[...common.getLocalDate(this.state.nowUser)];
+				newState=common.getLocalDate(nowUser)==null?[]:[...common.getLocalDate(nowUser)];
 			}
 
 		this.props.dispatch(showBlog(newState))
+		this.setState({nowUser:nowUser})
 	}
 	updateBlogfn(target){
 		this.setState({target, visible:true})
@@ -55,7 +57,7 @@ class Listpage extends React.Component{
 		let oldState=this.props.bloglist;
 		let newSate=oldState.map((item)=>{
 			if(item.id==val.id){
-				return val
+				return Object.assign({}, item, val)
 			}else{
 				return item
 			}
@@ -80,7 +82,6 @@ class Listpage extends React.Component{
 		const {user, nowUser}=this.props.loginInfo;
 		let {nowPage, nowPageList}=this.state;
 		nowPageList=listarr!=undefined&&listarr.length>0?listarr.filter((item, index)=>index>=(parseInt(nowPage-1)*8)&&index<parseInt(nowPage*8)):[];
-		console.log(nowPageList)
 		return (<div>
 				<div className="B-content">
 					<ul className="B-ul">
