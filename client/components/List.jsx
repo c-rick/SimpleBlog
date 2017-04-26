@@ -152,7 +152,7 @@ class List extends React.Component{
                   <p className="blog-title">{item.title.length > 10 ? `${item.title.substring(0, 10)}...` : item.title}</p>
                   <div className="list-content"><span dangerouslySetInnerHTML={this.rawMarkup(item.content)} /></div>
                   <p className="blog-time">{item.time}</p>
-                  <p className="list-a"><Link to={{ pathname: '/detail', state: { _id: item._id, user: nowUser } }}>查看更多<Icon type="double-right" /></Link></p>
+                  <p className="list-a"><Link to={{ pathname: '/detail', state: { _id: item._id } }}>查看更多<Icon type="double-right" /></Link></p>
                   <div className={user === null || user !== nowUser ? 'blog-btn' : 'blog-btn active'}>
                     <Popconfirm title="确定删除此博客吗?" onConfirm={ () => this.deletConfirm(index, item._id) } onCancel={this.deletCancel} okText="确定" cancelText="取消">
                       <Button ><Icon type="delete" />删除博客</Button>

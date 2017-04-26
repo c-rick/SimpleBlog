@@ -11,17 +11,61 @@ class Detail extends React.Component{
   constructor (props){
     super(props)
     this.state = {
-      id: '',
+      _id: '',
       title: '',
       content: '',
       time: '',
-      textareaVal: ''
+      textareaVal: '',
+      commentArr: []
     }
   }
   componentDidMount () {
     let target = this.props.location.state;
-    let blog = common.selectLocalDate(target.user, target.id);
-    this.setState(blog[0]);
+    fetch(common.base + '/blogDetail?_id=' + target._id, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8'
+      }
+    }).then(
+      (res) => res.json()
+      ).then(
+        (resJson) => {
+          if (resJson.status === 200) {
+            this.setState(
+              resJson.result[0]
+            );
+          } else {
+            message.error(resJson.message);
+          }
+        }
+      ).catch(
+        (err) => console.log(err)
+      )
+    this.getComments();
+  }
+
+  getComments () {
+    let target = this.props.location.state;
+    fetch(common.base + '/comments?blogid=' + target._id, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8'
+      }
+    }).then(
+        (res) => res.json()
+      ).then(
+        (resJson) => {
+          if (resJson.status === 200) {
+            this.setState({ commentArr: resJson.result });
+          } else {
+            message.error(resJson.message);
+          }
+        }
+      ).catch(
+        (err) => console.log(err)
+      )
   }
   rawMarkup () {
     var md = new Remarkable();
@@ -29,23 +73,37 @@ class Detail extends React.Component{
     return { __html: rawMarkup };
   }
   sendComment () {
+    const username = common.getLocalDate('username');
     let target = this.props.location.state;
-    let blog = common.selectLocalDate(target.user, target.id);
-    let newState = common.getLocalDate(target.user);
-    let { textareaVal } = this.state;
-    let { user } = this.props.loginInfo;
-    let id = new Date().getTime();
-    let time = common.changeDate(id);
-    blog[0].commentArr = blog[0].commentArr && user !== null ?
-      [...blog[0].commentArr, { id, name: user, comment: textareaVal, time }]
-      :
-      blog[0].commentArr = [{ id, name: user, comment: textareaVal, time }];
-    this.setState(blog[0]);
-    newState = newState.map((item) =>
-      item.id === blog[0].id ? Object.assign({}, item, blog[0]) : item
+    let { textareaVal, commentArr } = this.state;
+    let time = common.changeDate(new Date().getTime());
+    let newCommon = {
+      blogid: target._id,
+      user: username,
+      comment: textareaVal,
+      time: time
+    };
+    fetch(common.base + '/addComment', {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: common.changePostBody(newCommon)
+    }).then(
+    (res) => res.json()
+    ).then(
+    (resJson) => {
+      if (resJson.status === 201) {
+        message.success(resJson.message)
+      } else {
+        message.error(resJson.message);
+      }
+    }
+    ).catch(
+    (err) => console.log(err)
     )
-    common.resetLocalDate(target.user, newState)
-    this.props.dispatch(showBlog(newState))
+    this.getComments();
   }
   changeVal (event) {
     this.setState({ textareaVal: event.target.value });
@@ -77,9 +135,9 @@ class Detail extends React.Component{
                     commentArr !== undefined && commentArr.length > 0 ?
                     commentArr.map((item, index) =>
                        (
-                             <li key={item.id}>
-                              <span>{item.name}</span>
-                              <p>{item.comment}</p>
+                             <li key={item._id}>
+                              <span>{item.user}</span>
+                              <div>{item.comment}</div>
                               <span>{item.time}</span>
                             </li>
                         )

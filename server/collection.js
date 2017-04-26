@@ -24,8 +24,16 @@ const userSchema = new mongoose.Schema({
   pawssword: String
 })
 
+const commentSchema = new mongoose.Schema({
+  blogid: String,
+  user: String,
+  comment: String,
+  time: String
+})
+
 // 创建model
 const blogModel = mongoose.model('blogs', blogSchema);
 const userModel = mongoose.model('users', userSchema);
+const commentModel = mongoose.model('comments', commentSchema);
 
-module.exports = { blogs: blogModel, users: userModel };
+module.exports = { blogs: blogModel, users: userModel, comments: commentModel };

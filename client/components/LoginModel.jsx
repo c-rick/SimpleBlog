@@ -28,10 +28,10 @@ class loginmodel extends React.Component{
           (res) => res.json()
         ).then(
           (resJson) => {
-            console.log(resJson)
             if (resJson.status === 200) {
               message.success(resJson.message)
               this.props.loginForm(resJson.result[0]._id);
+              common.resetLocalDate('username', resJson.result[0].name);
             } else {
               message.error(resJson.message);
             }

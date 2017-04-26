@@ -1,6 +1,6 @@
 'use strict'
 const bodyParser = require('body-parser');
-const { blogs, users } = require('../collection.js');
+const { blogs, users, comments } = require('../collection.js');
 
 const routes = (app) => {
     // 添加 body-parser 中间件就可以异步获取了
@@ -68,10 +68,21 @@ const routes = (app) => {
     })
   })
 
-    // select
+    // selectAll
   app.get('/blogLists', (req, res, next) => {
-    console.log(req.query)
     blogs.find({ 'userid': req.query.id }, (findErr, findResult, findRes) => {
+      if (findErr) {
+        res.json({ 'status': 500, 'message': findErr });
+        console.log(findErr)
+      } else {
+        res.json({ result: findResult, status: 200 });
+      }
+    })
+  })
+
+  // selectDetail
+  app.get('/blogDetail', (req, res, next) => {
+    blogs.find({ '_id': req.query._id }, (findErr, findResult, findRes) => {
       if (findErr) {
         res.json({ 'status': 500, 'message': findErr });
         console.log(findErr)
@@ -89,7 +100,6 @@ const routes = (app) => {
       content: req.body.content,
       time: req.body.time
     };
-    console.log(newBlog)
     blogs.create(newBlog, (err) => {
       if (err) {
         res.json({ 'status': 500, 'error': err });
@@ -115,6 +125,7 @@ const routes = (app) => {
         res.json({ message: '更新成功', 'status': 201 });
       }
     })})
+
   // delet
   app.post('/deletBlog', (req, res, next) => {
     blogs.remove({ '_id': req.body._id }, (err, result) => {
@@ -122,6 +133,36 @@ const routes = (app) => {
         res.json({ 'status': 500, 'error': err });
       } else {
         res.json({ message: '删除成功', 'status': 204 });
+      }
+    })
+  })
+
+  // selectcomments
+  app.get('/comments', (req, res, next) => {
+    comments.find({ 'blogid': req.query.blogid }, (findErr, findResult, findRes) => {
+      console.log(findResult)
+      if (findErr) {
+        res.json({ 'status': 500, 'error': findErr });
+      } else {
+        res.json({ result: findResult, 'status': 200 });
+      }
+    })
+  })
+
+  // addcomment
+  app.post('/addComment', (req, res, next) => {
+    let newComment = {
+      blogid: req.body.blogid,
+      user: req.body.user,
+      comment: req.body.comment,
+      time: req.body.time
+    };
+    comments.create(newComment, (err) => {
+      if (err) {
+        res.json({ 'status': 500, 'error': err });
+        console.log(err)
+      } else {
+        res.json({ message: '评论成功', 'status': 201 });
       }
     })
   })

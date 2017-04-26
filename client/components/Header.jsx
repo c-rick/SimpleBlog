@@ -48,7 +48,6 @@ class Header extends React.Component{
           (res) => res.json()
         ).then(
           (resJson) => {
-            console.log(resJson)
             if (resJson.status === 200) {
               this.props.dispatch(showBlog(resJson.result));
             } else {
@@ -116,7 +115,6 @@ class Header extends React.Component{
         (res) => res.json()
       ).then(
         (resJson) => {
-          console.log(resJson)
           if (resJson.status === 200) {
             let newState = [...resJson.result, blogs];
             this.props.dispatch(showBlog(newState));
@@ -144,7 +142,6 @@ class Header extends React.Component{
         (res) => res.json()
       ).then(
         (resJson) => {
-          console.log(resJson)
           if (resJson.status === 201) {
             message.success(resJson.message)
           } else {
