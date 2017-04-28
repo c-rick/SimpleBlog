@@ -35,7 +35,6 @@ const routes = (app) => {
         if (findResult.length === 0 || (findResult[0].pawssword !== req.body.pawssword)) {
           res.json({ 'status': 400, 'message': '用户名或密码错误！' })
         } else {
-          console.log(findResult[0]._id.toString())
           sess.userid = findResult[0]._id.toString() || null;
           res.json({ 'status': 200, 'message': '登录成功', 'result': findResult })
         }

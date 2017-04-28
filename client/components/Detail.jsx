@@ -114,7 +114,7 @@ class Detail extends React.Component{
     return (
     <div>
       <div className="blog-content">
-        <div className="blog-box">
+        <div className="detial-box">
           <Breadcrumb>
             <Breadcrumb.Item href="javascript:history.go(-1)">
               <Icon type="home" />
@@ -123,11 +123,11 @@ class Detail extends React.Component{
               博客详情
             </Breadcrumb.Item>
           </Breadcrumb>
-          <h3 className="D-title">{title} <i>{time}</i></h3>
-          <div className="blog-content" ><span dangerouslySetInnerHTML={this.rawMarkup()} /></div>
+          <h3 className="detial-title">{title} <i>{time}</i></h3>
+          <div className="detial-content" ><span dangerouslySetInnerHTML={this.rawMarkup()} /></div>
             {
               user !== '' && user !== null ? (
-                <div className="blog-comment">
+                <div className="detial-comment">
                   <textarea onChange={this.changeVal.bind(this)} />
                   <Button onClick={this.sendComment.bind(this)}>确认发送</Button>
                   <ul>
@@ -148,7 +148,7 @@ class Detail extends React.Component{
                   </ul>
                 </div>)
                 :
-                <li className="unLogin-info">-------------登陆参与评论评论---------</li>
+                <li className="unLogin-info">-------------登陆参与评论---------</li>
               }
             </div>
       </div>

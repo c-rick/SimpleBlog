@@ -1,5 +1,5 @@
 export default{
-  base: 'http://192.168.1.142:3000',
+  base: 'http://192.168.1.67:3000',
   changeDate (timeString) {
     const timeDate = new Date(parseInt(timeString)).toLocaleString().replace(/\//g, '-').replace(/下|上/g, ' ').substring(0, 10);
     return timeDate;

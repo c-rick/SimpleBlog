@@ -176,7 +176,7 @@ class Header extends React.Component{
 							<p>欢迎来到万花博客</p>
 							<Dropdown overlay={menu}>
 							<Button className="header-more">
-							更多 <Icon type="setting" />
+							More <Icon type="caret-down" />
 							</Button>
 							</Dropdown>
 							<AddModel

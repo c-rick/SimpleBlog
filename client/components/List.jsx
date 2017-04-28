@@ -14,7 +14,7 @@ class List extends React.Component{
     this.state = {
       target: {},
       visible: false,
-      nowUser: 'rick',
+      nowUser: '58feeee116bfa6733f90dcf7',
       nowPage: 1,
       nowPageList: []
     }
@@ -44,7 +44,10 @@ class List extends React.Component{
           }
         }
       ).catch(
-        (err) => console.log(err)
+        (err) => {
+          console.log(err)
+          message.error('网络错误')
+        }
       )
   }
 
@@ -76,7 +79,10 @@ class List extends React.Component{
           }
         }
       ).catch(
-        (err) => console.log(err)
+        (err) => {
+          console.log(err)
+          message.error('网络错误')
+        }
       )
     this.props.dispatch(showBlog(allState))
   }
@@ -119,7 +125,10 @@ class List extends React.Component{
           }
         }
       ).catch(
-        (err) => console.log(err)
+        (err) => {
+          console.log(err)
+          message.error('网络错误')
+        }
       )
     this.props.dispatch(showBlog(newSate))
   }
@@ -166,7 +175,7 @@ class List extends React.Component{
           <p className="empty-list">--------------------暂时没有博文------------------------</p>
           }
           </ul>
-          <Pagination defaultCurrent={nowPage} defaultPageSize={8} total={listarr.length} onChange={this.changePage.bind(this)} />
+          <Pagination className={listarr.length > 0 ? 'showPag' : 'hiddenPag'} defaultCurrent={nowPage} defaultPageSize={8} total={listarr.length} onChange={this.changePage.bind(this)} />
           <UpdateModel
             visible={this.state.visible}
             onCancel={this.handleCancel.bind(this)}

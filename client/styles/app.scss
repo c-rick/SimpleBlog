@@ -3,7 +3,9 @@ html, body, div, h5, h6, p, ul, li {
     padding: 0px;
     list-style:none;
 }
-
+body{
+	background: #999!important;
+}
 #app {
     .title {
         font-size: 25px;
@@ -36,6 +38,9 @@ footer{width: 100%;height: 80px;background: #404040;}
 .blog-ul{
 	width:1000px;
 	margin: 0 auto;
+	background: #fff;
+	padding: 0 20px;
+	border-radius: 20px;
 	.blog-li{
 		font-size: 18px;
 		border-bottom:2px dotted #404040;
@@ -59,23 +64,30 @@ footer{width: 100%;height: 80px;background: #404040;}
 			display: block;
 		}
 	}
+	.blog-li:last-child{
+		border-bottom: none;
+	}
 }
 
 .list-a{
 	text-align: right;
 	padding: 0!important;
 }
-.blog-box{
+.detial-box{
 	width: 1000px;
 	margin: 0 auto;
 	padding:10px 50px;
 	text-align: center;
 	font-size: 25px;
+	box-sizing:border-box;
+	background: #fff;
+	border-radius: 20px;
 	h1,h2,h3,h4,h5,h6{text-align: center;padding-bottom: 20px;}
-	h3.D-title{
+	h3.detial-title{
 	position: relative;
 	font-size: 35px;
 	color: #222;
+	padding: 20px;
 	padding-bottom: 80px;
 	border-bottom: 2px dotted #999;
 		i{
@@ -83,28 +95,23 @@ footer{width: 100%;height: 80px;background: #404040;}
 		position: absolute;right: 50px;bottom:10px;
 		}
 	}
-	.blog-content{
+	.detial-content{
+		padding: 20px;
 		padding-top: 50px;
 		line-height: 30px;
 		text-align: left;
+
 	}
 	.ant-breadcrumb{
 		text-align: left;
 		padding-left: 20px;
 		font-size: 25px;
+
 	}
-}
-.empty-list{text-align: center;font-size: 25px;}
-.blog-content{
-	.ant-pagination{
-		display: inline-block;
-		margin-top:50px; 
-	}
-}
-.blog-comment{
+	.detial-comment{
 	margin-top:100px;
 	padding-top: 30px;
-	border-top:2px dotted #999;
+	border-top:2px solid #999;
 	position: relative;
 	textarea{
 	height: 120px;
@@ -135,13 +142,23 @@ footer{width: 100%;height: 80px;background: #404040;}
 		clear:both;
 	}
 }
-.blog-comment:before{
+.detial-comment:before{
 	position: absolute;
-	content:'评论区';
+	content:'评论区:';
 	font-size: 25px;
 	top: -40px;
 	left: 0;
 }
+}
+.empty-list{text-align: center;font-size: 25px;}
+.blog-content{
+	.ant-pagination{
+		display: inline-block;
+		margin-top:50px; 
+	}
+}
+
 .unLogin-info{
 	margin-top: 100px;
 }
+.hiddenPag{display: none!important;}
