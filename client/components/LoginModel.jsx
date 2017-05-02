@@ -13,10 +13,10 @@ class loginmodel extends React.Component{
     const form = this.props.form;
       // login
     form.validateFields((err, forms) => {
-      if (err) {
-        return;
-      }
-      if (key === 1){
+      if (key === 'login'){
+        if (err) {
+          return;
+        }
         fetch(common.base + '/login', {
           method: 'post',
           mode: 'cors',
@@ -115,7 +115,7 @@ class loginmodel extends React.Component{
             title="登录"
             okText="登录"
             onCancel={onCancel}
-            onOk={this.handleCreate.bind(this, 1)}
+            onOk={this.handleCreate.bind(this, 'login')}
           >
             <Form layout="vertical">
               <FormItem label="帐号" hasFeedback>
@@ -139,7 +139,7 @@ class loginmodel extends React.Component{
             title="注册"
             okText="注册"
             onCancel={onCancel}
-            onOk={this.handleCreate.bind(this, 2)}
+            onOk={this.handleCreate.bind(this, 'redigest')}
           >
             <Form layout="vertical">
               <FormItem label="帐号" hasFeedback>

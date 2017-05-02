@@ -32,23 +32,23 @@ class addmodel extends React.Component{
     const { visible, onCancel } = this.props;
     const { getFieldDecorator } = this.props.form;
     return (<Modal
-			visible={visible}
-			title="编写新博客"
-			okText="保存"
-			onCancel={this.OnclearCancel.bind(this)}
-			onOk={this.handleCreate.bind(this)}
-			>
+      visible={visible}
+      title="编写新博客"
+      okText="保存"
+      onCancel={this.OnclearCancel.bind(this)}
+      onOk={this.handleCreate.bind(this)}
+      >
              <Form layout="vertical">
-				<FormItem label="标题">
-				{getFieldDecorator('title', { rules: [{ required: true, message: '请输入博客标题!' }] })(
-					<Input />
-				)}
-				</FormItem>
-				<FormItem label="内容">
-				{getFieldDecorator('content', { rules: [{ required: true, message: '写点啥吧!' }] })(<Input rows="10" type="textarea" />)}
-				</FormItem>
-			</Form>
-		</Modal>);
+        <FormItem label="标题">
+        {getFieldDecorator('title', { rules: [{ required: true, message: '请输入博客标题!' }] })(
+          <Input />
+        )}
+        </FormItem>
+        <FormItem label="内容">
+        {getFieldDecorator('content', { rules: [{ required: true, message: '写点啥吧!' }] })(<Input rows="10" type="textarea" />)}
+        </FormItem>
+      </Form>
+    </Modal>);
   }
 }
 

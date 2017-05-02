@@ -11,7 +11,8 @@ import {
 import './styles/app.scss';
 
 /* redux */
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 
 import { Provider } from 'react-redux';
 import reducer from './reducer/index';
@@ -24,7 +25,7 @@ import Detail from './components/Detail';
 
 
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(ReduxThunk));
 ReactDOM.render(
     <Provider store={store}>
       <Router >

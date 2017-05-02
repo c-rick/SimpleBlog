@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showBlog } from '../actions';
+import { selectBlogAction, deletBlogAction, updateBlogAction } from '../actions';
 import { Button, Icon, Popconfirm, message, Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 import UpdateModel from './UpdateModel';
@@ -27,64 +27,16 @@ class List extends React.Component{
       nowUser = query.substring(query.indexOf('=') + 1, query.length);
     }
     this.setState({ nowUser: nowUser });
-    fetch(common.base + '/blogLists?id=' + nowUser, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8'
-      }
-    }).then(
-      (res) => res.json()
-      ).then(
-        (resJson) => {
-          if (resJson.status === 200) {
-            this.props.dispatch(showBlog(resJson.result));
-          } else {
-            message.error(resJson.message);
-          }
-        }
-      ).catch(
-        (err) => {
-          console.log(err)
-          message.error('网络错误')
-        }
-      )
+    this.props.dispatch(selectBlogAction(nowUser))
   }
 
   updateBlogfn (target) {
     this.setState({ target, visible: true })
   }
 
-  deletConfirm (index, id) {
-    let username = this.props.loginInfo.user;
-    let allState = this.props.bloglist;
-    allState.splice(index, 1)
-    fetch(common.base + '/deletBlog', {
-      method: 'post',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: common.changePostBody({
-        _id: id
-      })
-    }).then(
-        (res) => res.json()
-      ).then(
-        (resJson) => {
-          if (resJson.status === 204) {
-            message.success(resJson.message)
-          } else {
-            message.error(resJson.message);
-          }
-        }
-      ).catch(
-        (err) => {
-          console.log(err)
-          message.error('网络错误')
-        }
-      )
-    this.props.dispatch(showBlog(allState))
+  deletConfirm (blogid) {
+    let user = this.props.loginInfo.user;
+    this.props.dispatch(deletBlogAction(blogid, user))
   }
 
   deletCancel () {
@@ -96,41 +48,8 @@ class List extends React.Component{
   }
 
   updateFrom (target) {
-    console.log(target)
     let user = this.props.loginInfo.user;
-    let oldState = this.props.bloglist;
-    let newSate = oldState.map((item) =>
-       item._id === target._id ? Object.assign({}, item, target) : item
-    )
-    fetch(common.base + '/updateBlog', {
-      method: 'post',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: common.changePostBody({
-        _id: target._id,
-        title: target.title,
-        content: target.content,
-        time: target.time
-      })
-    }).then(
-        (res) => res.json()
-      ).then(
-        (resJson) => {
-          if (resJson.status === 201) {
-            message.success(resJson.message)
-          } else {
-            message.error(resJson.message);
-          }
-        }
-      ).catch(
-        (err) => {
-          console.log(err)
-          message.error('网络错误')
-        }
-      )
-    this.props.dispatch(showBlog(newSate))
+    this.props.dispatch(updateBlogAction(target, user))
   }
 
   rawMarkup (content) {
@@ -163,7 +82,7 @@ class List extends React.Component{
                   <p className="blog-time">{item.time}</p>
                   <p className="list-a"><Link to={{ pathname: '/detail', state: { _id: item._id } }}>查看更多<Icon type="double-right" /></Link></p>
                   <div className={user === null || user !== nowUser ? 'blog-btn' : 'blog-btn active'}>
-                    <Popconfirm title="确定删除此博客吗?" onConfirm={ () => this.deletConfirm(index, item._id) } onCancel={this.deletCancel} okText="确定" cancelText="取消">
+                    <Popconfirm title="确定删除此博客吗?" onConfirm={ () => this.deletConfirm(item._id) } onCancel={this.deletCancel} okText="确定" cancelText="取消">
                       <Button ><Icon type="delete" />删除博客</Button>
                     </Popconfirm>
                     &emsp;
