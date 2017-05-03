@@ -32,7 +32,7 @@ class Header extends React.Component{
         this.props.dispatch(login(user, 'rick'))
       }
     }
-		// 监听当前的地址变换
+    // 监听当前的地址变换
     history.listen((location) => {
       const query = location.search || location.state;
       if (query !== '' && query !== undefined) {
@@ -97,37 +97,39 @@ class Header extends React.Component{
   render (){
     const { user } = this.props.loginInfo;
     const menu = user !== null ?
-		<Menu className="font3" onClick={this.menuClick.bind(this)}>
-		<Menu.Item key="isAdd">写博客</Menu.Item>
-		<Menu.Item key="isShow">我的博客</Menu.Item>
-		<Menu.Item key="isLoginOut">退出</Menu.Item>
-		</Menu>
-		:
-		<Menu className="font3" onClick={this.menuClick.bind(this)}>
-		<Menu.Item key="isLogin">请登录</Menu.Item>
-		<Menu.Item key="isRigestIn">没有帐号？</Menu.Item>
-		</Menu>
-		;
-    return (<div className="blog-header">
-							<p>欢迎来到万花博客</p>
-							<Dropdown overlay={menu}>
-							<Button className="header-more">
-							More <Icon type="caret-down" />
-							</Button>
-							</Dropdown>
-							<AddModel
-								visible={this.state.addvisible}
-								onCancel={this.addCancel.bind(this)}
-								getFrom={this.addBlog.bind(this)}
-							/>
-							<LoginModel
-								modeltype={this.state.modeltype}
-								visible={this.state.loginvisible}
-								onCancel={this.loginCancel.bind(this)}
-								loginForm={this.loginForm.bind(this)}
-							/>
-							{ history.location.pathname === '/' ? <Redirect to="/list" /> : '' }
-						</div>);
+    <Menu className="font3" onClick={this.menuClick.bind(this)}>
+      <Menu.Item key="isAdd">写博客</Menu.Item>
+      <Menu.Item key="isShow">我的博客</Menu.Item>
+      <Menu.Item key="isLoginOut">退出</Menu.Item>
+    </Menu>
+    :
+    <Menu className="font3" onClick={this.menuClick.bind(this)}>
+      <Menu.Item key="isLogin">请登录</Menu.Item>
+      <Menu.Item key="isRigestIn">没有帐号？</Menu.Item>
+    </Menu>
+    ;
+    return (
+      <div className="blog-header">
+        <p>欢迎来到万花博客</p>
+        <Dropdown overlay={menu}>
+          <Button className="header-more">
+            More <Icon type="caret-down" />
+          </Button>
+        </Dropdown>
+        <AddModel
+          visible={this.state.addvisible}
+          onCancel={this.addCancel.bind(this)}
+          getFrom={this.addBlog.bind(this)}
+        />
+        <LoginModel
+          modeltype={this.state.modeltype}
+          visible={this.state.loginvisible}
+          onCancel={this.loginCancel.bind(this)}
+          loginForm={this.loginForm.bind(this)}
+        />
+        { history.location.pathname === '/' ? <Redirect to="/list" /> : '' }
+      </div>
+    );
   }
 }
 

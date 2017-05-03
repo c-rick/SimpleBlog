@@ -119,17 +119,19 @@ class loginmodel extends React.Component{
           >
             <Form layout="vertical">
               <FormItem label="帐号" hasFeedback>
-              {getFieldDecorator('loginName', {
-                rules: [{ required: true, message: '请输入帐号!' },
-                { validator: this.loginIsUser }]
-              })(
-              <Input />
-              )}
+                {getFieldDecorator('loginName', {
+                  rules: [{ required: true, message: '请输入帐号!' },
+                  { validator: this.loginIsUser }]
+                })(
+                  <Input />
+                )}
               </FormItem>
               <FormItem label="密码">
-              {getFieldDecorator('loginPassword', {
-                rules: [{ required: true, message: '请输入密码!' }]
-              })(<Input type="password" />)}
+                {getFieldDecorator('loginPassword', {
+                  rules: [{ required: true, message: '请输入密码!' }]
+                })(
+                  <Input type="password" />
+                )}
               </FormItem>
             </Form>
           </Modal>
@@ -143,17 +145,19 @@ class loginmodel extends React.Component{
           >
             <Form layout="vertical">
               <FormItem label="帐号" hasFeedback>
-              {getFieldDecorator('ridigestName', {
-                rules: [{ required: true, message: '请输入帐号!' },
-                { validator: this.ridigestIsUser }]
-              })(
-              <Input />
-              )}
+                {getFieldDecorator('ridigestName', {
+                  rules: [{ required: true, message: '请输入帐号!' },
+                  { validator: this.ridigestIsUser }]
+                })(
+                  <Input />
+                )}
               </FormItem>
               <FormItem label="密码">
-              {getFieldDecorator('ridigestPassword', {
-                rules: [{ required: true, message: '请输入密码!' }]
-              })(<Input type="text" />)}
+                {getFieldDecorator('ridigestPassword', {
+                  rules: [{ required: true, message: '请输入密码!' }]
+                })(
+                  <Input type="text" />
+                )}
               </FormItem>
             </Form>
           </Modal>

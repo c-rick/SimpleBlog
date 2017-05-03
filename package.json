@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --hot --port=8888 --history-api-fallback",
     "build": "webpack -p",
-    "server": "nodemon server/App.js"
+    "server": "nodemon server/app.js"
   },
   "repository": {
     "type": "git",

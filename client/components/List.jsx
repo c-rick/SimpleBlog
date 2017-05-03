@@ -70,39 +70,59 @@ class List extends React.Component{
     const { user, nowUser } = this.props.loginInfo;
     let { nowPage, nowPageList } = this.state;
     nowPageList = listarr !== undefined && listarr.length > 0 ? listarr.slice((parseInt(nowPage - 1) * 8), nowPage * 8) : [];
-    return (<div>
+    return (
+      <div>
         <div className="blog-content">
           <ul className="blog-ul">
-          {
-          nowPageList.length > 0 ?
-          nowPageList.map((item, index) =>
-             (<li className='blog-li' key={item._id}>
+            {
+            nowPageList.length > 0 ?
+            nowPageList.map((item, index) =>
+              (
+                <li className='blog-li' key={item._id}>
                   <p className="blog-title">{item.title.length > 10 ? `${item.title.substring(0, 10)}...` : item.title}</p>
-                  <div className="list-content"><span dangerouslySetInnerHTML={this.rawMarkup(item.content)} /></div>
+                  <div className="list-content">
+                    <span dangerouslySetInnerHTML={this.rawMarkup(item.content)} />
+                  </div>
                   <p className="blog-time">{item.time}</p>
-                  <p className="list-a"><Link to={{ pathname: '/detail', state: { _id: item._id } }}>查看更多<Icon type="double-right" /></Link></p>
+                  <p className="list-a">
+                    <Link to={{ pathname: '/detail', state: { _id: item._id } }}>查看更多<Icon type="double-right" /></Link>
+                  </p>
                   <div className={user === null || user !== nowUser ? 'blog-btn' : 'blog-btn active'}>
-                    <Popconfirm title="确定删除此博客吗?" onConfirm={ () => this.deletConfirm(item._id) } onCancel={this.deletCancel} okText="确定" cancelText="取消">
+                    <Popconfirm
+                      title="确定删除此博客吗?"
+                      okText="确定"
+                      cancelText="取消"
+                      onConfirm={ () => this.deletConfirm(item._id) }
+                      onCancel={this.deletCancel}
+                    >
                       <Button ><Icon type="delete" />删除博客</Button>
                     </Popconfirm>
                     &emsp;
                     <Button onClick={() => this.updateBlogfn(item) }><Icon type="sync" />更新博客</Button>
                   </div>
-                </li>)
+                </li>
+              )
             )
-          :
-          <p className="empty-list">--------------------暂时没有博文------------------------</p>
-          }
+            :
+            <p className="empty-list">--------------------暂时没有博文------------------------</p>
+            }
           </ul>
-          <Pagination className={listarr.length > 0 ? 'showPag' : 'hiddenPag'} defaultCurrent={nowPage} defaultPageSize={8} total={listarr.length} onChange={this.changePage.bind(this)} />
+          <Pagination
+            className={listarr.length > 0 ? 'showPag' : 'hiddenPag'}
+            defaultCurrent={nowPage}
+            defaultPageSize={8}
+            total={listarr.length}
+            onChange={this.changePage.bind(this)}
+          />
           <UpdateModel
             visible={this.state.visible}
             onCancel={this.handleCancel.bind(this)}
             updateFrom={this.updateFrom.bind(this)}
             target={this.state.target}
           />
-          </div>
-          </div>);
+        </div>
+      </div>
+    );
   }
 }
 

@@ -125,36 +125,36 @@ class Detail extends React.Component{
           </Breadcrumb>
           <h3 className="detial-title">{title} <i>{time}</i></h3>
           <div className="detial-content" ><span dangerouslySetInnerHTML={this.rawMarkup()} /></div>
-            {
-              user !== '' && user !== null ? (
-                <div className="detial-comment">
-                  <textarea onChange={this.changeVal.bind(this)} />
-                  <Button onClick={this.sendComment.bind(this)}>确认发送</Button>
-                  <ul>
-                  {
-                    commentArr !== undefined && commentArr.length > 0 ?
-                    commentArr.map((item, index) =>
-                       (
-                             <li key={item._id}>
-                              <span>{item.user}</span>
-                              <div>{item.comment}</div>
-                              <span>{item.time}</span>
-                            </li>
-                        )
-                      )
-                      :
-                      <li>-------------暂时没有评论---------</li>
-                    }
-                  </ul>
-                </div>)
+          {
+            user !== '' && user !== null ? (
+              <div className="detial-comment">
+              <textarea onChange={this.changeVal.bind(this)} />
+              <Button onClick={this.sendComment.bind(this)}>确认发送</Button>
+              <ul>
+              {
+                commentArr !== undefined && commentArr.length > 0 ?
+                commentArr.map((item, index) => (
+                  <li key={item._id}>
+                  <span>{item.user}</span>
+                  <div>{item.comment}</div>
+                  <span>{item.time}</span>
+                  </li>
+                  )
+                )
                 :
-                <li className="unLogin-info">-------------登陆参与评论---------</li>
+                <li>-------------暂时没有评论---------</li>
               }
-            </div>
+              </ul>
+              </div>
+              )
+            :
+            <li className="unLogin-info">-------------登陆参与评论---------</li>
+          }
+        </div>
       </div>
     </div>);
   }
-    }
+}
 
 
 function blogProps (state) {
